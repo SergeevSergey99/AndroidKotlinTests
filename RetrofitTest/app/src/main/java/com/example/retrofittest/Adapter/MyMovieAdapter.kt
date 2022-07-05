@@ -1,6 +1,7 @@
 package com.example.retrofittest.Adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,10 +9,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.retrofittest.FullBio
+import com.example.retrofittest.MainActivity
 import com.example.retrofittest.Model.Movie
 import com.example.retrofittest.R
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_full_bio.view.*
 import kotlinx.android.synthetic.main.item_layout.view.*
+import kotlinx.android.synthetic.main.item_layout.view.image_movie
 
 class MyMovieAdapter (private val context: Context, private var movieList: MutableList<Movie>) : RecyclerView.Adapter<MyMovieAdapter.MyViewHolder>()
 {
@@ -23,11 +28,21 @@ class MyMovieAdapter (private val context: Context, private var movieList: Mutab
 
         fun bind(listItem: Movie){
             image.setOnClickListener {
-                Toast.makeText(it.context, "нажал на ${itemView.image_movie}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(it.context, "нажал на ${listItem.name}", Toast.LENGTH_SHORT).show()
             }
 
             itemView.setOnClickListener {
-                Toast.makeText(it.context, "нажал на ${itemView.txt_name.text}", Toast.LENGTH_SHORT).show()
+                val act = Intent(it.context, FullBio::class.java)
+
+                act.putExtra("imageurl",listItem.imageurl,)
+                act.putExtra("name",listItem.name,)
+                act.putExtra("realname",listItem.realname,)
+                act.putExtra("createdby",listItem.createdby,)
+                act.putExtra("publisher",listItem.publisher,)
+                act.putExtra("first",listItem.firstappearance,)
+                act.putExtra("bio",listItem.bio,)
+
+                it.context.startActivity(act)
             }
         }
     }

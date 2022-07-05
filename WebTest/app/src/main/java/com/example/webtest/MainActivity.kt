@@ -1,5 +1,6 @@
 package com.example.webtest
 
+import android.annotation.TargetApi
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
@@ -38,13 +39,14 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         bindingCobtent = ContentMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        //setContentView(binding.root)
         setContentView(bindingCobtent.root)
 
         setSupportActionBar(binding.appBarMain.toolbar)
 
         mWebView = bindingCobtent.webView
         var url = getString(R.string.url)
+        mWebView.getSettings().setJavaScriptEnabled(true);
 
         loadWebSite(mWebView, url, applicationContext)
         bindingCobtent.swipeRefreshLayout.setColorSchemeColors(R.color.black, R.color.purple_200, R.color.teal_200)
@@ -78,8 +80,8 @@ class MainActivity : AppCompatActivity() {
         mWebView.clearCache(true)
         if (networkAvailable) {
             wvVisible(mWebView)
-            mWebView.webViewClient = WebViewClient()
             mWebView.loadUrl(url)
+            mWebView.webViewClient = WebViewClient()
         } else {
             wvGone(mWebView)
         }
@@ -137,7 +139,6 @@ class MainActivity : AppCompatActivity() {
 
         override fun shouldOverrideUrlLoading(view: WebView?, url: String): Boolean {
             return urlOverride(url)
-            return super.shouldOverrideUrlLoading(view, url)
         }
 
         private fun urlOverride(url: String): Boolean {
@@ -147,6 +148,8 @@ class MainActivity : AppCompatActivity() {
             if (networkAvailable) {
                 if (Uri.parse(url).host == getString(R.string.url)) return false
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                startActivity(intent)
+                onLoadSite()
                 return true
             } else {
                 wvGone(bindingCobtent.webView)
@@ -171,6 +174,7 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+        @TargetApi(Build.VERSION_CODES.M)
         override fun onReceivedError(
             view: WebView?,
             request: WebResourceRequest?,

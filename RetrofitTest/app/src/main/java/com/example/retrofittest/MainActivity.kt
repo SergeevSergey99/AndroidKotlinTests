@@ -9,6 +9,7 @@ import com.example.retrofittest.Common.Common
 import com.example.retrofittest.Interface.RetrofitServices
 import kotlinx.android.synthetic.main.activity_main.*
 import android.app.AlertDialog
+import androidx.recyclerview.widget.RecyclerView
 import com.example.retrofittest.Model.Movie
 
 
@@ -34,6 +35,8 @@ class MainActivity : AppCompatActivity() {
         //dialog = SpotsDialog.Builder().setCancelable(true).setContext(this).build()
 
         getAllMovieList()
+
+
     }
 
     private fun getAllMovieList() {
@@ -50,9 +53,11 @@ class MainActivity : AppCompatActivity() {
                 adapter.notifyDataSetChanged()
                 recycler.adapter = adapter
 
+
                 //dialog.dismiss()
             }
         })
     }
 }
+
 
