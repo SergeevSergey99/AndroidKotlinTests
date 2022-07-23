@@ -74,7 +74,7 @@ class AppModel {
 
     private fun moveValid(position: Point, frameNumber: Int?): Boolean {
         val shape: Array<ByteArray>? = currentBlock?.getShape(frameNumber as Int)
-        return validTranslation(position, shape!!)
+        return validTranslation(position, shape as Array<ByteArray>)
     }
 
     fun generateField(action: String) {
@@ -139,9 +139,9 @@ class AppModel {
                 val isEmpty = CellConstants.EMPTY.value == status
                 if (isEmpty)
                     emptyCells++
-                if (emptyCells == 0)
-                    shiftRows(i)
             }
+            if (emptyCells == 0)
+                shiftRows(i)
         }
     }
 
@@ -167,7 +167,7 @@ class AppModel {
                         val y = position.y + i
                         val x = position.x + j
                         if (CellConstants.EMPTY.value != shape[i][j])
-                            field[i][j] = shape[i][j]
+                            field[y][x] = shape[i][j]
                     }
                 }
             }

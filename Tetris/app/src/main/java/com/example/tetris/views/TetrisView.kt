@@ -97,12 +97,12 @@ class TetrisView : View {
         }
     }
 
-    private fun drawCell(canvas: Canvas?, row: Int, col: Int, rgbColor: Int) {
+    private fun drawCell(canvas: Canvas?, x: Int, y: Int, rgbColor: Int) {
         paint.color = rgbColor
-        val top = (frameOffset.height + y * cellSize.height + BLOCK_OFFSET)
-        val left = (frameOffset.width + x * cellSize.width + BLOCK_OFFSET)
-        val bottom = (frameOffset.height + (y + 1) * cellSize.height - BLOCK_OFFSET)
-        val right = (frameOffset.width + (x + 1) * cellSize.width - BLOCK_OFFSET)
+        val top = (frameOffset.height + y * cellSize.height + BLOCK_OFFSET).toFloat()
+        val left = (frameOffset.width + x * cellSize.width + BLOCK_OFFSET).toFloat()
+        val bottom = (frameOffset.height + (y + 1) * cellSize.height - BLOCK_OFFSET).toFloat()
+        val right = (frameOffset.width + (x + 1) * cellSize.width - BLOCK_OFFSET).toFloat()
 
         val rectangle = RectF(left, top, right, bottom)
         canvas?.drawRoundRect(rectangle, 4F, 4F, paint)
